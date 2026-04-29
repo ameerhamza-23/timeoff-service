@@ -10,7 +10,10 @@ export class BalanceRepository {
     private readonly repo: Repository<BalanceEntity>,
   ) {}
 
-  findOne(employeeId: string, locationId: string): Promise<BalanceEntity | null> {
+  findOne(
+    employeeId: string,
+    locationId: string,
+  ): Promise<BalanceEntity | null> {
     return this.repo.findOne({ where: { employeeId, locationId } });
   }
 
@@ -22,10 +25,18 @@ export class BalanceRepository {
     return this.repo.save(balance);
   }
 
-  async upsert(employeeId: string, locationId: string, availableDays: number, hcmSyncedAt: Date): Promise<void> {
+  async upsert(
+    employeeId: string,
+    locationId: string,
+    availableDays: number,
+    hcmSyncedAt: Date,
+  ): Promise<void> {
     await this.repo.upsert(
       { employeeId, locationId, availableDays, hcmSyncedAt },
-      { conflictPaths: ['employeeId', 'locationId'], skipUpdateIfNoValuesChanged: true },
+      {
+        conflictPaths: ['employeeId', 'locationId'],
+        skipUpdateIfNoValuesChanged: true,
+      },
     );
   }
 }

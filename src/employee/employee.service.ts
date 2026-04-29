@@ -1,4 +1,8 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { EmployeeRepository } from './employee.repository';
 import { EmployeeEntity } from './employee.entity';
 import { CreateEmployeeRequestDto } from './dto/create-employee.request.dto';
@@ -10,7 +14,9 @@ export class EmployeeService {
   async create(dto: CreateEmployeeRequestDto): Promise<EmployeeEntity> {
     const existing = await this.employeeRepository.findByEmail(dto.email);
     if (existing) {
-      throw new ConflictException(`Employee with email ${dto.email} already exists`);
+      throw new ConflictException(
+        `Employee with email ${dto.email} already exists`,
+      );
     }
     return this.employeeRepository.save(dto);
   }
