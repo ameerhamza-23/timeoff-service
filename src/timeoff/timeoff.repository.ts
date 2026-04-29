@@ -25,10 +25,11 @@ export class TimeOffRepository {
     return this.repo.findOne({ where: { idempotencyKey } });
   }
 
-  save(
+  async save(
     request: Partial<TimeOffRequestEntity>,
   ): Promise<TimeOffRequestEntity> {
-    return this.repo.save(request);
+    const entity = this.repo.create(request);
+    return this.repo.save(entity);
   }
 
   async updateStatus(

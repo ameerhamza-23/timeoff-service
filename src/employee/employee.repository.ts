@@ -18,7 +18,8 @@ export class EmployeeRepository {
     return this.repo.findOne({ where: { email } });
   }
 
-  save(employee: Partial<EmployeeEntity>): Promise<EmployeeEntity> {
-    return this.repo.save(employee);
+  async save(employee: Partial<EmployeeEntity>): Promise<EmployeeEntity> {
+    const entity = this.repo.create(employee);
+    return this.repo.save(entity);
   }
 }
